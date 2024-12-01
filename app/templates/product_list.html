@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Products{% endblock %}
+{% block content %}
+<h1 class="text-center mb-4">Available Products</h1>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><strong>${{ product.price }}</strong></p>
+                <form class="add-to-wishlist-form" method="post" action="{{ url_for('app.add_to_wishlist') }}">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <input type="hidden" name="product_name" value="{{ product.name }}">
+                    <input type="hidden" name="product_description" value="{{ product.description }}">
+                    <input type="hidden" name="product_price" value="{{ product.price }}">
+                    <button type="submit" class="btn btn-primary btn-block">Add to Wishlist</button>
+                </form>
+                <button class="btn btn-secondary btn-block like-product mt-2" data-id="{{ product.id }}">
+                    Like
+                </button>
+                <span class="like-count d-block text-center mt-2">{{ product.likes }}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script src="{{ url_for('static', filename='js/wishlist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/like.js') }}"></script>
+{% endblock %}

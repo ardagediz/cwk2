@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Wishlist{% endblock %}
+{% block content %}
+<h1 class="text-center mb-4">Your Wishlist</h1>
+<div class="row wishlist-container">
+    {% for product in session['wishlist'] %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text"><strong>${{ product.price }}</strong></p>
+                <form class="remove-from-wishlist-form" method="post"
+                    action="{{ url_for('app.remove_from_wishlist') }}">
+                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                    <button type="submit" class="btn btn-danger btn-block">Remove from Wishlist</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
